@@ -7,10 +7,19 @@ module.exports = {
   "parserOptions": {
     "sourceType": "module",
     "allowImportExportEverywhere": true,
-    "codeFrame": false
-  }, 
+    "codeFrame": false,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "rules": {
     "linebreak-style": 0
   },
-  "extends": "google"
+  "plugins" :[
+    "react"
+  ],
+  "extends": [
+    "google",
+    "plugin:react/recommended"
+  ]
 };

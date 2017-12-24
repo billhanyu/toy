@@ -1,7 +1,16 @@
 import React from 'react';
 import TodoItem from './todo-item';
+import PropTypes from 'prop-types';
 
+/**
+ * TodoList
+ */
 class TodoList extends React.Component {
+  /**
+   * render - description
+   *
+   * @return {type}  description
+   */
   render() {
     // 获取从父组件传递过来的 todolist
     const todoList = this.props.todoList;
@@ -24,5 +33,10 @@ class TodoList extends React.Component {
     );
   }
 }
+
+TodoList.propTypes = {
+  todoList: PropTypes.object,
+  onDeleteItem: PropTypes.func,
+};
 
 export default TodoList;

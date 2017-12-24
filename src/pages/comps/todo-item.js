@@ -1,6 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+/**
+ * TodoItem
+ */
 class TodoItem extends React.Component {
+  /**
+   * constructor - description
+   *
+   * @param  {type} props description
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -8,6 +17,9 @@ class TodoItem extends React.Component {
     };
   }
 
+  /**
+   * handleDelete - description
+   */
   handleDelete() {
     // 获取父组件传递过来的 date
     const date = this.props.date;
@@ -15,6 +27,10 @@ class TodoItem extends React.Component {
     this.props.onDeleteItem(date);
   }
 
+  /**
+   * render - description
+   * @return {React.Component}
+   */
   render() {
     return (
       <div className="todoItem">
@@ -29,5 +45,11 @@ class TodoItem extends React.Component {
     );
   }
 }
+
+TodoItem.propTypes = {
+  date: PropTypes.string,
+  content: PropTypes.string,
+  onDeleteItem: PropTypes.func,
+};
 
 export default TodoItem;

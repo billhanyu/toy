@@ -9,7 +9,9 @@ let index = require('./routes/index');
 let users = require('./routes/users');
 
 let mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/todo');
+mongoose.connect('mongodb://localhost:27017/todo', {
+  useMongoClient: true,
+});
 
 let app = express();
 

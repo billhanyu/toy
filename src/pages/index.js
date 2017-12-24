@@ -1,9 +1,15 @@
-import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import $ from 'jquery';
 import TodoList from './comps/todo-list';
 
+/**
+ * Todo
+ */
 class Todo extends React.Component {
+  /**
+   * constructor - description
+   * @param  {type} props description
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -12,12 +18,16 @@ class Todo extends React.Component {
     };
   }
 
+  /**
+   * hooks
+   */
   componentDidMount() {
     // 获取所有的 todolist
     this._getTodoList();
   }
 
-  // 获取 todolist
+  /** 获取 todolist
+   */
   _getTodoList() {
     const that = this;
     $.ajax({
@@ -36,7 +46,9 @@ class Todo extends React.Component {
     });
   }
 
-  // 添加 todo
+  /** 添加 todo
+   * @param {type} newItem new item
+   */
   _onNewItem(newItem) {
     const that = this;
     $.ajax({
@@ -56,9 +68,10 @@ class Todo extends React.Component {
     });
   }
 
-  // 删除 todo
+  /** 删除 todo
+   * @param {type} date the Date
+   */
   _onDeleteItem(date) {
-    const that = this;
     const postData = {
       date: date,
     };
@@ -76,18 +89,23 @@ class Todo extends React.Component {
     });
   }
 
-  // 对 todolist 进行逆向排序（使新录入的项目显示在列表上面）
+  /** 对 todolist 进行逆向排序（使新录入的项目显示在列表上面）
+   * @param {type} todoList todo list
+   * @return {type} return something
+   */
   todoSort(todoList) {
     todoList.reverse();
     return todoList;
   }
 
-  // 提交表单操作
+  /** 提交表单操作
+   * @param {event} event event
+   */
   handleSubmit(event) {
     event.preventDefault();
     // 表单输入为空验证
-    if (this.refs.content.value == '') {
-      this.refs.content.focus();
+    if (this.contentRef.value == '') {
+      this.contentRef.focus();
       this.setState({
         showTooltip: true,
       });
@@ -95,7 +113,7 @@ class Todo extends React.Component {
     }
     // 生成参数
     let newItem={
-      content: this.refs.content.value,
+      content: this.contentRef.value,
       date: (new Date().getMonth() +1 ) + '/'
       + new Date().getDate() + ' '
       + new Date().getHours() + ':'
@@ -105,24 +123,40 @@ class Todo extends React.Component {
     // 添加 todo
     this._onNewItem(newItem);
     // 重置表单
-    this.refs.todoForm.reset();
+    this.formRef.reset();
     // 隐藏提示信息
     this.setState({
       showTooltip: false,
     });
   }
 
+  /**
+   * render - description
+   * @return {type}  description
+   */
   render() {
     return (
       <div className="container">
       <h2 className="header">Todo List</h2>
-      <form className="todoForm" ref="todoForm" onSubmit={ this.handleSubmit.bind(this) }>
-      <input ref="content" type="text" placeholder="Type content here..." className="todoContent" />
+      <form
+        className="todoForm"
+        ref={(el) => this.formRef = el}
+        onSubmit={ this.handleSubmit.bind(this) }
+      >
+      <input
+        ref={(el) => this.contentRef = el}
+        type="text"
+        placeholder="Type content here..."
+        className="todoContent"
+      />
       { this.state.showTooltip &&
         <span className="tooltip">Content is required !</span>
       }
       </form>
-      <TodoList todoList={this.state.todoList} onDeleteItem={this._onDeleteItem.bind(this)} />
+      <TodoList
+        todoList={this.state.todoList}
+        onDeleteItem={this._onDeleteItem.bind(this)}
+      />
       </div>
     );
   }
