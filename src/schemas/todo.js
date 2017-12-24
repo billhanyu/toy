@@ -1,15 +1,15 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
-var Todo = new Schema({
+let Todo = new Schema({
   content: {
     type: String,
-    required: true
+    required: true,
   },
   date: {
     type: String,
-    required: true
-  }
-}, { collection: 'todo' });
+    required: true,
+  },
+}, {collection: 'todo'});
 
 module.exports = Todo;

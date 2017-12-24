@@ -1,111 +1,109 @@
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import $ from 'jquery'
-import TodoList from './comps/todo-list'
+import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
+import $ from 'jquery';
+import TodoList from './comps/todo-list';
 
 class Todo extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       todoList: [],
-      showTooltip: false  // 控制 tooltip 的显示隐藏
-    }
+      showTooltip: false, // 控制 tooltip 的显示隐藏
+    };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // 获取所有的 todolist
     this._getTodoList();
   }
 
   // 获取 todolist
-  _getTodoList () {
+  _getTodoList() {
     const that = this;
     $.ajax({
       url: '/getAllItems',
       type: 'get',
       dataType: 'json',
-      success: data => {
-        const todoList = that.todoSort(data)
+      success: (data) => {
+        const todoList = that.todoSort(data);
         that.setState({
-          todoList
+          todoList,
         });
       },
-      error: err => {
+      error: (err) => {
         console.log(err);
-      }
+      },
     });
   }
 
   // 添加 todo
-  _onNewItem (newItem) {
+  _onNewItem(newItem) {
     const that = this;
     $.ajax({
       url: '/addItem',
       type: 'post',
       dataType: 'json',
       data: newItem,
-      success: data => {
+      success: (data) => {
         const todoList = that.todoSort(data);
         that.setState({
-          todoList
+          todoList,
         });
       },
-      error: err => {
+      error: (err) => {
         console.log(err);
-      }
-    })
+      },
+    });
   }
 
   // 删除 todo
-  _onDeleteItem (date) {
+  _onDeleteItem(date) {
     const that = this;
     const postData = {
-      date: date
+      date: date,
     };
     $.ajax({
       url: '/deleteItem',
       type: 'post',
       dataType: 'json',
       data: postData,
-      success: data => {
+      success: (data) => {
         this._getTodoList();
       },
-      error: err => {
+      error: (err) => {
         console.log(err);
-      }
-    })
+      },
+    });
   }
 
   // 对 todolist 进行逆向排序（使新录入的项目显示在列表上面）
-  todoSort (todoList) {
+  todoSort(todoList) {
     todoList.reverse();
     return todoList;
   }
 
   // 提交表单操作
-  handleSubmit(event){
-
+  handleSubmit(event) {
     event.preventDefault();
     // 表单输入为空验证
-    if(this.refs.content.value == "") {
+    if (this.refs.content.value == '') {
       this.refs.content.focus();
       this.setState({
-        showTooltip: true
+        showTooltip: true,
       });
-      return ;
+      return;
     }
     // 生成参数
-    var newItem={
+    let newItem={
       content: this.refs.content.value,
-      date: (new Date().getMonth() +1 ) + "/"
-      + new Date().getDate() + " "
-      + new Date().getHours() + ":"
-      + new Date().getMinutes() + ":"
-      + new Date().getSeconds()
+      date: (new Date().getMonth() +1 ) + '/'
+      + new Date().getDate() + ' '
+      + new Date().getHours() + ':'
+      + new Date().getMinutes() + ':'
+      + new Date().getSeconds(),
     };
     // 添加 todo
-    this._onNewItem(newItem)
+    this._onNewItem(newItem);
     // 重置表单
     this.refs.todoForm.reset();
     // 隐藏提示信息
@@ -126,7 +124,7 @@ class Todo extends React.Component {
       </form>
       <TodoList todoList={this.state.todoList} onDeleteItem={this._onDeleteItem.bind(this)} />
       </div>
-    )
+    );
   }
 }
 

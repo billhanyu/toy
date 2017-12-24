@@ -1,15 +1,14 @@
 import React from 'react';
 
 class TodoItem extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      showDel: false  // 控制删除 icon 的显示隐藏
-    }
+      showDel: false, // 控制删除 icon 的显示隐藏
+    };
   }
 
-  handleDelete () {
+  handleDelete() {
     // 获取父组件传递过来的 date
     const date = this.props.date;
     // 执行父组件的 delete 方法
@@ -27,7 +26,7 @@ class TodoItem extends React.Component {
       </button>
       </p>
       </div>
-    )
+    );
   }
 }
 

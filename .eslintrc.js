@@ -8,6 +8,9 @@ module.exports = {
     "sourceType": "module",
     "allowImportExportEverywhere": true,
     "codeFrame": false
+  }, 
+  "rules": {
+    "linebreak-style": 0
   },
   "extends": "google"
 };
