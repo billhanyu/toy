@@ -8,6 +8,6 @@ before_install:
   -in secret.enc -out secret -d
 after_success:
 - eval "$(ssh-agent -s)"
-- ssh-add `cat secret`
+- ssh-add secret
 - ssh han@104.236.218.82 'cd toy; git pull; pm2 stop deploy.sh; pm2 delete deploy.sh;
   pm2 start deploy.sh'
