@@ -1,3 +1,10 @@
 language: node_js
 node_js:
-  - "8"
+- '8'
+before_install:
+- openssl aes-256-cbc -K $encrypted_82518feb10a8_key -iv $encrypted_82518feb10a8_iv
+  -in secret.enc -out secret -d
+after_success:
+- eval "$(ssh-agent -s)" #start the ssh agent
+- ssh-add $encrypted_82518feb10a8_key
+- ssh han@104.236.218.82 'cd toy; pm2 stop deploy.sh; pm2 delete deploy.sh; pm2 start deploy.sh'
