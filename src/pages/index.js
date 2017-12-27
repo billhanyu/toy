@@ -143,15 +143,15 @@ class Todo extends React.Component {
         ref={(el) => this.formRef = el}
         onSubmit={ this.handleSubmit.bind(this) }
       >
-      <input
-        ref={(el) => this.contentRef = el}
-        type="text"
-        placeholder="Type content here..."
-        className="todoContent"
-      />
-      { this.state.showTooltip &&
-        <span className="tooltip">Content is required !</span>
-      }
+        <input
+          ref={(el) => this.contentRef = el}
+          type="text"
+          placeholder="Type content here..."
+          className="todoContent"
+        />
+        { this.state.showTooltip &&
+          <span className="tooltip">Content is required !</span>
+        }
       </form>
       <TodoList
         todoList={this.state.todoList}

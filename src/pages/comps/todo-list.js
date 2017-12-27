@@ -35,7 +35,7 @@ class TodoList extends React.Component {
 }
 
 TodoList.propTypes = {
-  todoList: PropTypes.object,
+  todoList: PropTypes.array,
   onDeleteItem: PropTypes.func,
 };
 
